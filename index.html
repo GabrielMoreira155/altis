@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -199,10 +199,7 @@
             .ds-cursor-aura { display: none; }
         }
         
-        /* Otimização de Performance Extrema no Scroll */
-        html.is-scrolling body {
-            pointer-events: none !important;
-        }
+        /* Otimização de Performance Extrema no Scroll (pointer-events desativado pois quebra scroll touch) */
         html.is-scrolling .search-card,
         html.is-scrolling .ds-nav,
         html.is-scrolling .ds-btn--hero-light {
@@ -747,11 +744,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
 
     <script>
-        // 1. Lenis Smooth Scroll
+        // 1. Lenis Smooth Scroll (Configuração refinada baseada na referência)
         const lenis = new Lenis({
-            lerp: 0.05,
+            lerp: 0.08, // Mais responsivo (era 0.05), elimina a sensação de "arrasto" ou lag
             smoothWheel: true,
-            wheelMultiplier: 1.2
+            wheelMultiplier: 1, // Roda do mouse 1:1, sem aceleração artificial
+            smoothTouch: false // Preserva a inércia nativa perfeita em touch/mobile
         });
         
         // Sincronização Rigorosa do GSAP com o Lenis
