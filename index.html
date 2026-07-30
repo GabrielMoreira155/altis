@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALTIS® — Luxury Real Estate</title>
+    
+    <!-- Meta tags for SEO & Quality Perception -->
+    <meta name="description" content="Altis — A curadoria definitiva do alto padrão. Encontre propriedades extraordinárias para viver momentos únicos.">
+    <meta name="theme-color" content="#FFFFFF">
+
+    <!-- Preloads -->
+    <link rel="preload" href="./image copy 2.png" as="image" fetchpriority="high">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Inter+Tight:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+
+
+    <style>
+        /* ================================================================
+           TOKENS & BASE (Derived from AURA Design System)
+           ================================================================ */
+        :root {
+            --paper: #FFFFFF;
+            --bone: #F5F3EF;
+            --mist: #ECE9E4;
+            --stone: #CDC9C1;
+            --ash: #A69C91;
+            --slate: #6B645C;
+            --ink: #3B3631;
+            --obsidian: #211E1B;
+            --char: #322D28;
+            --line: #E3E0DA;
+            --line-dark: #4A453F;
+            
+            --bronze: #8C7B66;
+            --bronze-lt: #B9A88F;
+            --bronze-dk: #6E6050;
+            
+            --font-display: "Google Sans Flex", "Inter Tight", "Inter", sans-serif;
+            --font-body: "Inter", sans-serif;
+            --font-mono: "IBM Plex Mono", monospace;
+            
+            --ease: cubic-bezier(.22,1,.36,1);
+            --ease-soft: cubic-bezier(.4,0,.2,1);
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--paper);
+            color: var(--ink);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-google-sans-flex { font-family: var(--font-display); }
+
+        /* ================================================================
+           COMPONENTS
+           ================================================================ */
+        
+        /* Navbar */
+        .ds-nav {
+            transition: height 0.7s var(--ease), background 0.7s var(--ease), box-shadow 0.7s var(--ease), backdrop-filter 0.7s var(--ease);
+        }
+        .ds-nav__link {
+            position: relative;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--ink);
+            transition: color 0.3s var(--ease-soft);
+            padding-bottom: 4px;
+        }
+        .ds-nav__link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--bronze);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s var(--ease);
+        }
+        .ds-nav__link:hover { color: var(--bronze); }
+        .ds-nav__link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Buttons */
+        .ds-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 1rem 1.75rem;
+            border-radius: 999px;
+            transition: all 0.45s var(--ease);
+            cursor: pointer;
+        }
+        .ds-btn iconify-icon { transition: transform 0.45s var(--ease); }
+        .ds-btn:hover iconify-icon { transform: translate(3px, -3px); }
+        
+        .ds-btn--nav {
+            background: var(--ink);
+            color: var(--bone);
+        }
+        .ds-btn--nav:hover {
+            background: var(--bronze);
+            color: var(--paper);
+            box-shadow: 0 0 0 1px var(--bronze-32), 0 18px 60px -18px var(--bronze-56);
+        }
+
+        .ds-btn--hero-primary {
+            background: var(--bronze);
+            color: var(--paper);
+            border: 1px solid transparent;
+        }
+        .ds-btn--hero-primary:hover {
+            background: var(--bronze-dk);
+            box-shadow: 0 0 0 1px rgba(140,123,102,0.32), 0 18px 60px -18px rgba(140,123,102,0.56);
+        }
+
+        .ds-btn--hero-light {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--paper);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .ds-btn--hero-light:hover {
+            background: var(--paper);
+            color: var(--ink);
+        }
+
+        /* Cinematic Hero Treatments */
+        .hero-overlay {
+            background: 
+                linear-gradient(to bottom, rgba(33,30,27,0.3) 0%, rgba(33,30,27,0.6) 50%, rgba(33,30,27,0.95) 100%),
+                radial-gradient(circle at center, transparent 25%, rgba(0,0,0,0.7) 100%);
+            box-shadow: inset 0 0 120px rgba(0,0,0,0.4);
+            /* mix-blend-mode removido para performance de GPU */
+        }
+
+        /* Search Card (Glassmorphism & Shadows) */
+        .search-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 40px 80px -20px rgba(0,0,0,0.6);
+            transform-style: preserve-3d;
+        }
+        
+        /* Select Dropdowns */
+        select option {
+            background: var(--obsidian);
+            color: var(--mist);
+        }
+
+        /* Microinteractions */
+        .ds-cursor-aura {
+            position: fixed; z-index: 9999; width: 520px; height: 520px; border-radius: 50%;
+            left: 0; top: 0; margin: -260px 0 0 -260px; pointer-events: none;
+            background: radial-gradient(circle, rgba(140, 123, 102, 0.25) 0%, transparent 68%);
+            mix-blend-mode: soft-light; opacity: 0; transition: opacity 0.6s var(--ease-soft);
+            will-change: transform;
+        }
+        .ds-magnetic { will-change: transform; }
+
+        /* Typography Animation Utilities */
+        .word {
+            overflow: hidden;
+            padding: 0.25em 0.1em;
+            margin: -0.25em -0.1em;
+        }
+
+        /* Acessibilidade */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                transition-duration: 0.001ms !important;
+            }
+            .ds-cursor-aura { display: none; }
+        }
+        
+        /* Otimização de Performance Extrema no Scroll */
+        html.is-scrolling body {
+            pointer-events: none !important;
+        }
+        html.is-scrolling .search-card,
+        html.is-scrolling .ds-nav,
+        html.is-scrolling .ds-btn--hero-light {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            background-color: rgba(26, 24, 22, 0.95) !important;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="ds-cursor-aura hidden md:block" id="cursorAura"></div>
+
+    <!-- ============================== NAVBAR ============================== -->
+    <nav id="navbar" class="ds-nav fixed top-0 left-0 w-full z-50 bg-white h-[112px] flex items-center">
+        <div class="max-w-[80rem] mx-auto w-full px-6 lg:px-12 flex items-center justify-between">
+            
+            <!-- Links Esquerda -->
+            <div class="hidden lg:flex items-center gap-10 flex-1">
+                <a href="#" class="ds-nav__link">Propriedades</a>
+                <a href="#" class="ds-nav__link">Lançamentos</a>
+                <a href="#" class="ds-nav__link">Off-Market</a>
+            </div>
+            
+            <!-- Logo -->
+            <a href="#" class="flex-shrink-0 flex items-center gap-2.5 group justify-center cursor-pointer">
+                <iconify-icon class="text-[#8C7B66] transition-transform duration-500 group-hover:rotate-90" height="26" icon="solar:hexagon-linear" style="stroke-width:1.5px"></iconify-icon>
+                <span class="font-google-sans-flex text-[1.35rem] tracking-tight text-[#3B3631]">ALTIS<sup class="text-[10px] align-top">®</sup></span>
+            </a>
+            
+            <!-- Links Direita & CTA -->
+            <div class="hidden lg:flex items-center justify-end gap-10 flex-1">
+                <a href="#" class="ds-nav__link">A Marca</a>
+                <button class="ds-btn ds-btn--nav ds-magnetic" style="padding: 0.85rem 1.5rem; font-size: 0.6875rem;">
+                    Atendimento exclusivo
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="lg:hidden text-[#3B3631] text-2xl" aria-label="Abrir menu">
+                <iconify-icon icon="solar:hamburger-menu-linear"></iconify-icon>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ============================== HERO SECTION ============================== -->
+    <section class="hero-section relative w-full h-[100svh] min-h-[900px] flex flex-col justify-center items-center overflow-hidden pt-20 pb-32 lg:pb-48">
+        
+        <!-- Background Image com Cinematic Treatment -->
+        <div class="absolute inset-[-5%] z-0 will-change-transform [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" id="heroBgWrapper">
+            <img src="./image copy 2.png" alt="Luxury Desert Retreat" class="w-full h-full object-cover" id="heroImage" fetchpriority="high" decoding="sync" width="1920" height="1080" />
+            <div class="hero-overlay absolute inset-0"></div>
+        </div>
+        
+        <!-- Hero Content -->
+        <div class="relative z-10 w-full max-w-[80rem] mx-auto px-6 lg:px-12 flex flex-col items-center text-center">
+            
+            <!-- Eyebrow -->
+            <div class="overflow-hidden mb-6">
+                <span class="block text-[#ECE9E4] font-mono text-[0.6875rem] tracking-[0.28em] uppercase translate-y-full" id="heroEyebrow">
+                    Alphaville • Goiânia
+                </span>
+            </div>
+            
+            <!-- Title -->
+            <h1 class="font-google-sans-flex text-[2.5rem] md:text-5xl lg:text-[5rem] font-medium leading-[1.1] tracking-[-0.04em] text-white max-w-[1100px] mb-8 hero-title">
+                Encontre propriedades extraordinárias para viver momentos únicos.
+            </h1>
+            
+            <!-- Subtitle -->
+            <p class="font-sans text-[#ECE9E4] text-[1.125rem] font-light leading-[1.65] max-w-2xl mb-12 hero-fade opacity-0">
+                A curadoria definitiva do alto padrão. Arquitetura assinada, design exclusivo e o privilégio de um estilo de vida incomparável.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row items-center gap-4 hero-fade opacity-0">
+                <button class="ds-btn ds-btn--hero-primary ds-magnetic">
+                    Conheça os imóveis <iconify-icon icon="solar:arrow-right-up-linear" class="text-lg"></iconify-icon>
+                </button>
+                <button class="ds-btn ds-btn--hero-light ds-magnetic">
+                    Agendar visita
+                </button>
+            </div>
+        </div>
+
+        <!-- ============================== SEARCH CARD ============================== -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[70rem] z-20" id="heroSearch">
+            <div class="search-card rounded-[24px] p-5 lg:p-7 relative overflow-visible group/card">
+                
+                <!-- Card Inner Glow Effect -->
+                <div class="absolute -top-[100px] -right-[100px] w-[300px] h-[300px] bg-[#8C7B66]/20 rounded-full blur-[80px] pointer-events-none transition-opacity duration-700 opacity-0 group-hover/card:opacity-100"></div>
+                
+                <div class="relative z-10">
+                    <!-- Tabs -->
+                    <div class="flex items-center gap-6 border-b border-white/10 pb-4 mb-5 relative overflow-x-auto no-scrollbar">
+                        <button class="search-tab active text-[0.8125rem] font-medium text-white transition-colors duration-300 tracking-[0.1em] uppercase whitespace-nowrap">
+                            Comprar
+                        </button>
+                        <button class="search-tab text-[0.8125rem] font-medium text-white/50 hover:text-white transition-colors duration-300 tracking-[0.1em] uppercase whitespace-nowrap">
+                            Alugar
+                        </button>
+                        <button class="search-tab text-[0.8125rem] font-medium text-white/50 hover:text-white transition-colors duration-300 tracking-[0.1em] uppercase whitespace-nowrap">
+                            Vender meu imóvel
+                        </button>
+                        <div class="tab-indicator absolute bottom-0 left-0 h-[2px] bg-[#8C7B66] transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)] w-[75px]"></div>
+                    </div>
+                    
+                    <!-- Form Fields -->
+                    <div class="flex flex-col lg:flex-row items-end gap-5 lg:gap-6">
+                        
+                        <!-- Localização -->
+                        <div class="flex-1 w-full relative group/field">
+                            <label for="locationInput" class="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-white/50 group-hover/field:text-white/80 transition-colors mb-2 block">Localização</label>
+                            <div class="relative flex items-center">
+                                <iconify-icon icon="solar:map-point-linear" class="absolute left-0 text-white/40 group-hover/field:text-[#8C7B66] group-focus-within/field:text-[#8C7B66] transition-colors text-xl"></iconify-icon>
+                                <input id="locationInput" type="text" placeholder="Qual a sua região preferida?" class="w-full bg-transparent border-b border-white/20 text-white placeholder:text-white/30 pl-8 pb-3 focus:outline-none focus:border-[#8C7B66] transition-all text-[0.9375rem] group-hover/field:border-white/40" />
+                            </div>
+                        </div>
+                        
+                        <!-- Quartos -->
+                        <div class="w-full lg:w-[120px] relative group/field">
+                            <label for="bedsInput" class="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-white/50 group-hover/field:text-white/80 transition-colors mb-2 block">Quartos</label>
+                            <div class="relative flex items-center">
+                                <iconify-icon icon="solar:bed-linear" class="absolute left-0 text-white/40 group-hover/field:text-[#8C7B66] group-focus-within/field:text-[#8C7B66] transition-colors text-xl"></iconify-icon>
+                                <select id="bedsInput" class="w-full bg-transparent border-b border-white/20 text-white pl-8 pr-4 pb-3 focus:outline-none focus:border-[#8C7B66] transition-all text-[0.9375rem] group-hover/field:border-white/40 appearance-none cursor-pointer">
+                                    <option value="1">1+</option>
+                                    <option value="2">2+</option>
+                                    <option value="3">3+</option>
+                                    <option value="4" selected>4+</option>
+                                </select>
+                                <iconify-icon icon="solar:alt-arrow-down-linear" class="absolute right-0 text-white/40 text-sm pointer-events-none group-hover/field:text-white/70 transition-colors"></iconify-icon>
+                            </div>
+                        </div>
+
+                        <!-- Banheiros -->
+                        <div class="w-full lg:w-[120px] relative group/field">
+                            <label for="bathsInput" class="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-white/50 group-hover/field:text-white/80 transition-colors mb-2 block">Banheiros</label>
+                            <div class="relative flex items-center">
+                                <iconify-icon icon="solar:bath-linear" class="absolute left-0 text-white/40 group-hover/field:text-[#8C7B66] group-focus-within/field:text-[#8C7B66] transition-colors text-xl"></iconify-icon>
+                                <select id="bathsInput" class="w-full bg-transparent border-b border-white/20 text-white pl-8 pr-4 pb-3 focus:outline-none focus:border-[#8C7B66] transition-all text-[0.9375rem] group-hover/field:border-white/40 appearance-none cursor-pointer">
+                                    <option value="1">1+</option>
+                                    <option value="2">2+</option>
+                                    <option value="3">3+</option>
+                                    <option value="4" selected>4+</option>
+                                </select>
+                                <iconify-icon icon="solar:alt-arrow-down-linear" class="absolute right-0 text-white/40 text-sm pointer-events-none group-hover/field:text-white/70 transition-colors"></iconify-icon>
+                            </div>
+                        </div>
+                        
+                        <!-- Preço -->
+                        <div class="w-full lg:w-[220px] relative group/field">
+                            <label for="priceInput" class="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-white/50 group-hover/field:text-white/80 transition-colors mb-2 block">Preço</label>
+                            <div class="relative flex items-center">
+                                <iconify-icon icon="solar:wad-of-money-linear" class="absolute left-0 text-white/40 group-hover/field:text-[#8C7B66] group-focus-within/field:text-[#8C7B66] transition-colors text-xl"></iconify-icon>
+                                <select id="priceInput" class="w-full bg-transparent border-b border-white/20 text-white pl-8 pr-4 pb-3 focus:outline-none focus:border-[#8C7B66] transition-all text-[0.9375rem] group-hover/field:border-white/40 appearance-none cursor-pointer">
+                                    <option value="5">R$ 5M+</option>
+                                    <option value="10" selected>R$ 10M+</option>
+                                    <option value="20">R$ 20M+</option>
+                                    <option value="50">R$ 50M+</option>
+                                </select>
+                                <iconify-icon icon="solar:alt-arrow-down-linear" class="absolute right-0 text-white/40 text-sm pointer-events-none group-hover/field:text-white/70 transition-colors"></iconify-icon>
+                            </div>
+                        </div>
+
+                        <!-- CTA Buscar -->
+                        <button class="w-full lg:w-auto h-[46px] px-8 bg-[#8C7B66] text-white rounded-full flex items-center justify-center gap-2 font-semibold tracking-[0.14em] uppercase text-[0.75rem] transition-all duration-500 hover:scale-[1.03] hover:bg-[#B9A88F] hover:shadow-[0_0_30px_rgba(140,123,102,0.45)] relative overflow-hidden group/btn flex-shrink-0 mt-2 lg:mt-0 lg:ml-2">
+                            <span class="relative z-10 flex items-center gap-2">Buscar <iconify-icon icon="solar:magnifer-linear" class="text-[1.125rem] transition-transform duration-500 group-hover/btn:rotate-90"></iconify-icon></span>
+                            <div class="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[45deg] group-hover/btn:left-[200%] transition-all duration-700 ease-out z-0"></div>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================== FEATURED PROPERTIES ============================== -->
+    <section class="relative w-full bg-[#211E1B] text-white pt-32 pb-40" id="featuredSection">
+        <!-- Transition Gradient Top -->
+        <div class="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-transparent to-[#211E1B] -translate-y-full pointer-events-none z-10"></div>
+        
+        <div class="max-w-[80rem] mx-auto px-6 lg:px-12 w-full">
+            
+            <!-- Section Header -->
+            <div class="mb-24 lg:mb-40 max-w-2xl">
+                <span class="block text-[#ECE9E4]/60 font-mono text-[0.6875rem] tracking-[0.28em] uppercase mb-6 split-text-fade">Imóveis Disponíveis</span>
+                <h2 class="font-google-sans-flex text-4xl lg:text-[4.5rem] font-medium leading-[1.1] tracking-[-0.04em] text-white split-text-hero">
+                    Propriedades em destaque.
+                </h2>
+            </div>
+
+            <!-- Property List -->
+            <div class="flex flex-col gap-32 lg:gap-56">
+                <!-- Card 1 -->
+                <article class="featured-card group flex flex-col lg:flex-row items-center gap-12 lg:gap-24 w-full">
+                    <!-- Text Content (Left) -->
+                    <div class="w-full lg:w-[40%] flex flex-col items-start lg:pr-10 order-2 lg:order-1 relative z-10">
+                        <div class="font-google-sans-flex text-[3rem] lg:text-[5rem] text-white/10 font-light leading-none mb-6">01</div>
+                        <h3 class="font-google-sans-flex text-2xl lg:text-4xl font-medium mb-3 text-white">Mansão Aldeia</h3>
+                        <p class="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-[#8C7B66] mb-8">Aldeia do Vale, Goiânia</p>
+                        
+                        <p class="font-sans text-[#ECE9E4]/70 text-[0.9375rem] font-light leading-[1.8] mb-10 max-w-sm">
+                            Uma residência contemporânea cercada pela natureza, com ambientes amplos, muita luz natural e integração total entre áreas internas e externas. Uma propriedade pensada para quem busca conforto, privacidade e qualidade de vida em cada detalhe
+                        </p>
+                        
+                        <div class="w-full h-[1px] bg-white/10 mb-8"></div>
+                        
+                        <ul class="flex flex-wrap items-center gap-6 lg:gap-8 text-[0.75rem] font-mono text-white/60 uppercase tracking-[0.1em] mb-12">
+                            <li>1.200 m²</li>
+                            <li>5 Suítes</li>
+                            <li>8 Banheiros</li>
+                        </ul>
+                        
+                        <a href="#" class="featured-link relative text-[0.6875rem] font-medium tracking-[0.14em] uppercase text-white pb-2 overflow-hidden flex items-center gap-2 group/link ds-magnetic">
+                            VER PROJETO
+                            <div class="absolute bottom-0 left-0 w-full h-[1px] bg-white/20"></div>
+                            <div class="absolute bottom-0 left-0 w-full h-[1px] bg-[#8C7B66] -translate-x-full group-hover/link:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)]"></div>
+                        </a>
+                    </div>
+                    
+                    <!-- Image Content (Right) -->
+                    <div class="w-full lg:w-[60%] overflow-hidden relative order-1 lg:order-2 h-[50vh] lg:h-[80vh] rounded-[4px]">
+                        <img src="./image copy 3.png" alt="Mansão Aldeia" class="w-full h-full object-cover featured-img scale-[1.15] transition-transform duration-[1.5s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-100 will-change-transform [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" />
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700 pointer-events-none"></div>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="featured-card group flex flex-col lg:flex-row items-center gap-12 lg:gap-24 w-full">
+                    <!-- Image Content (Left) -->
+                    <div class="w-full lg:w-[60%] overflow-hidden relative h-[50vh] lg:h-[80vh] rounded-[4px]">
+                        <img src="./image copy 4.png" alt="Mansão Itália" class="w-full h-full object-cover featured-img scale-[1.15] transition-transform duration-[1.5s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-100 will-change-transform [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" />
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700 pointer-events-none"></div>
+                    </div>
+
+                    <!-- Text Content (Right) -->
+                    <div class="w-full lg:w-[40%] flex flex-col items-start lg:pl-10 relative z-10">
+                        <div class="font-google-sans-flex text-[3rem] lg:text-[5rem] text-white/10 font-light leading-none mb-6">02</div>
+                        <h3 class="font-google-sans-flex text-2xl lg:text-4xl font-medium mb-3 text-white">Villa Jardim</h3>
+                        <p class="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-[#8C7B66] mb-8">Jardim Itália, Goiânia</p>
+                        
+                        <p class="font-sans text-[#ECE9E4]/70 text-[0.9375rem] font-light leading-[1.8] mb-10 max-w-sm">
+                            Uma propriedade exclusiva que combina arquitetura contemporânea, acabamentos sofisticados e ambientes projetados para oferecer conforto e privacidade. Um imóvel único para viver com tranquilidade, elegância e total exclusividade
+                        </p>
+                        
+                        <div class="w-full h-[1px] bg-white/10 mb-8"></div>
+                        
+                        <ul class="flex flex-wrap items-center gap-6 lg:gap-8 text-[0.75rem] font-mono text-white/60 uppercase tracking-[0.1em] mb-12">
+                            <li>850 m²</li>
+                            <li>4 Suítes</li>
+                            <li>6 Banheiros</li>
+                        </ul>
+                        
+                        <a href="#" class="featured-link relative text-[0.6875rem] font-medium tracking-[0.14em] uppercase text-white pb-2 overflow-hidden flex items-center gap-2 group/link ds-magnetic">
+                            VER PROJETO
+                            <div class="absolute bottom-0 left-0 w-full h-[1px] bg-white/20"></div>
+                            <div class="absolute bottom-0 left-0 w-full h-[1px] bg-[#8C7B66] -translate-x-full group-hover/link:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)]"></div>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="featured-card group flex flex-col lg:flex-row items-center gap-12 lg:gap-24 w-full">
+                    <!-- Text Content (Left) -->
+                    <div class="w-full lg:w-[40%] flex flex-col items-start lg:pr-10 order-2 lg:order-1 relative z-10">
+                        <div class="font-google-sans-flex text-[3rem] lg:text-[5rem] text-white/10 font-light leading-none mb-6">03</div>
+                        <h3 class="font-google-sans-flex text-2xl lg:text-4xl font-medium mb-3 text-white">Residência Alpha</h3>
+                        <p class="font-mono text-[0.6875rem] tracking-[0.2em] uppercase text-[#8C7B66] mb-8">Alphaville, Goiânia</p>
+                        
+                        <p class="font-sans text-[#ECE9E4]/70 text-[0.9375rem] font-light leading-[1.8] mb-10 max-w-sm">
+                            Sofisticação, tecnologia e vistas panorâmicas em uma residência de alto padrão. Ambientes amplos, acabamentos de excelência e soluções inteligentes criam uma experiência de moradia completa e exclusiva
+                        </p>
+                        
+                        <div class="w-full h-[1px] bg-white/10 mb-8"></div>
+                        
+                        <ul class="flex flex-wrap items-center gap-6 lg:gap-8 text-[0.75rem] font-mono text-white/60 uppercase tracking-[0.1em] mb-12">
+                            <li>1.400 m²</li>
+                            <li>6 Suítes</li>
+                            <li>9 Banheiros</li>
+                        </ul>
+                        
+                        <a href="#" class="featured-link relative text-[0.6875rem] font-medium tracking-[0.14em] uppercase text-white pb-2 overflow-hidden flex items-center gap-2 group/link ds-magnetic">
+                            VER PROJETO
+                            <div class="absolute bottom-0 left-0 w-full h-[1px] bg-white/20"></div>
+                            <div class="absolute bottom-0 left-0 w-full h-[1px] bg-[#8C7B66] -translate-x-full group-hover/link:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)]"></div>
+                        </a>
+                    </div>
+                    
+                    <!-- Image Content (Right) -->
+                    <div class="w-full lg:w-[60%] overflow-hidden relative order-1 lg:order-2 h-[50vh] lg:h-[80vh] rounded-[4px]">
+                        <img src="./image copy 5_highres.png" alt="Residência Alpha" class="w-full h-full object-cover featured-img scale-[1.15] transition-transform duration-[1.5s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-100 will-change-transform brightness-125" />
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700 pointer-events-none"></div>
+                    </div>
+                </article>
+
+            </div>
+    </section>
+
+    <!-- ============================== THE CURATORSHIP (THIRD FOLD) ============================== -->
+    <section class="relative w-full bg-[#211E1B] text-white pt-32 pb-40 lg:pt-48 lg:pb-56 overflow-hidden" id="curatorshipSection">
+        
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+            <!-- Giant Transparent Lettering -->
+            <div class="absolute top-[10%] left-[-5%] font-google-sans-flex text-[15rem] lg:text-[25rem] font-bold text-white/[0.015] whitespace-nowrap leading-none select-none" id="bgLettering">
+                CURADORIA
+            </div>
+            <!-- Glow Effect -->
+            <div class="absolute top-[40%] right-[-10%] w-[500px] h-[500px] bg-[#8C7B66]/10 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div class="relative z-10 max-w-[80rem] mx-auto px-6 lg:px-12 w-full">
+            <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+                
+                <!-- Left Content: Editorial Statement -->
+                <div class="w-full lg:w-[50%] flex flex-col items-start">
+                    <div class="mb-8 flex items-center gap-4 reveal-fade">
+                        <div class="w-12 h-[1px] bg-[#8C7B66]"></div>
+                        <span class="font-mono text-[0.6875rem] tracking-[0.28em] uppercase text-[#8C7B66]">A Experiência Altis</span>
+                    </div>
+                    
+                    <h2 class="font-google-sans-flex text-4xl lg:text-[4rem] font-medium leading-[1.05] tracking-[-0.04em] text-white mb-10 split-text-editorial" style="perspective: 1000px;">
+                        Não apresentamos imóveis.<br/>
+                        <span class="text-[#8C7B66] italic font-light">Curamos patrimônios.</span>
+                    </h2>
+                    
+                    <div class="w-full max-w-md reveal-fade-delay">
+                        <p class="font-sans text-[#ECE9E4]/70 text-[1rem] font-light leading-[1.85] mb-8">
+                            Acreditamos que uma propriedade de alto padrão transcende o metro quadrado. Ela é a materialização de um estilo de vida, um legado familiar e uma obra de arte habitável.
+                        </p>
+                        <p class="font-sans text-[#ECE9E4]/70 text-[1rem] font-light leading-[1.85] mb-12">
+                            Nosso processo é desenhado para clientes que não têm tempo para o comum. Oferecemos um acesso restrito e discreto ao que há de mais extraordinário no mercado imobiliário, com um serviço <em class="text-white/90">bespoke</em> que antecipa cada detalhe da sua jornada.
+                        </p>
+                        
+                        <!-- Premium Button -->
+                        <a href="#" class="inline-flex items-center gap-4 group/btn ds-magnetic">
+                            <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover/btn:border-[#8C7B66] transition-colors duration-500 relative overflow-hidden">
+                                <div class="absolute inset-0 bg-[#8C7B66] translate-y-[100%] group-hover/btn:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)]"></div>
+                                <iconify-icon icon="solar:arrow-right-linear" class="text-white text-lg relative z-10 group-hover/btn:translate-x-1 transition-transform duration-500"></iconify-icon>
+                            </div>
+                            <span class="font-mono text-[0.75rem] tracking-[0.15em] uppercase text-white/80 group-hover/btn:text-white transition-colors duration-300">Falar com um curador</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Right Content: Architectural Image -->
+                <div class="w-full lg:w-[50%] relative mt-12 lg:mt-0">
+                    <div class="relative w-full aspect-[3/4] lg:aspect-[4/5] overflow-hidden rounded-[4px] editorial-image-wrapper">
+                        <!-- CSS Parallax wrapper inside -->
+                        <div class="absolute inset-[-10%] w-[120%] h-[120%]">
+                            <img src="./terceira-dobra.jpg" alt="Fachada Residencial" class="w-full h-full object-cover editorial-img opacity-90 will-change-transform [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" />
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#211E1B] via-transparent to-transparent opacity-80 pointer-events-none"></div>
+                        <div class="absolute inset-0 border border-white/10 rounded-[4px] pointer-events-none"></div>
+                    </div>
+                    
+                    <!-- Floating Accent Element -->
+                    <div class="absolute -bottom-10 -left-10 lg:-left-20 bg-[#2A2622] p-8 lg:p-12 rounded-[2px] shadow-[0_30px_60px_rgba(0,0,0,0.4)] border border-white/5 max-w-[280px] reveal-card">
+                        <iconify-icon icon="solar:shield-check-linear" class="text-[#8C7B66] text-4xl mb-6"></iconify-icon>
+                        <h4 class="font-google-sans-flex text-xl text-white font-medium mb-3">Discrição Absoluta</h4>
+                        <p class="font-sans text-[#ECE9E4]/60 text-[0.875rem] font-light leading-[1.6]">
+                            Operamos com acordos rígidos de confidencialidade. Seu patrimônio e privacidade são inegociáveis.
+                        </p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================== THE APPROACH (FOURTH FOLD) ============================== -->
+    <section class="relative w-full bg-[#1A1816] text-[var(--mist)] pt-32 pb-40 lg:pt-48 lg:pb-48 overflow-hidden" id="approachSection">
+        
+        <!-- Background Elements -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <!-- Transparent Lettering -->
+            <div class="absolute top-[20%] right-[-5%] font-google-sans-flex text-[15rem] lg:text-[25rem] font-bold text-white/[0.015] whitespace-nowrap leading-none select-none">
+                MÉTODO
+            </div>
+            <!-- Glow Effect -->
+            <div class="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#8C7B66]/5 rounded-full blur-[120px]"></div>
+            <div class="absolute top-[10%] right-[10%] w-[400px] h-[400px] bg-black/40 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div class="relative z-10 max-w-[80rem] mx-auto px-6 lg:px-12 w-full">
+            <!-- Section Header -->
+            <div class="mb-24 max-w-3xl">
+                <span class="block text-[#8C7B66] font-mono text-[0.6875rem] tracking-[0.28em] uppercase mb-6 split-text-fade-approach">Método de Trabalho</span>
+                <h2 class="font-google-sans-flex text-4xl lg:text-[4.5rem] font-medium leading-[1.1] tracking-[-0.04em] text-white split-text-hero-approach">
+                    Uma abordagem desenhada para poucos.
+                </h2>
+            </div>
+
+            <!-- Pillars Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+                
+                <!-- Pillar 1 -->
+                <div class="pillar-card border-t border-white/10 pt-8 flex flex-col items-start relative group">
+                    <div class="absolute top-0 left-0 w-0 h-[1px] bg-[#8C7B66] group-hover:w-full transition-all duration-700 ease-[cubic-bezier(.22,1,.36,1)]"></div>
+                    <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none -mx-6 px-6 -mt-8 pt-8 rounded-b-[4px]"></div>
+                    <span class="font-google-sans-flex text-5xl font-light text-[#8C7B66]/20 mb-8 leading-none transition-colors duration-500 group-hover:text-[#8C7B66]/40">01</span>
+                    <h3 class="font-google-sans-flex text-2xl font-medium mb-4 text-white">Curadoria Ativa</h3>
+                    <p class="font-sans text-[#ECE9E4]/70 text-[0.9375rem] font-light leading-[1.75]">
+                        Monitoramos constantemente o mercado em busca de oportunidades off-market e propriedades que atendam aos mais rigorosos padrões de arquitetura e exclusividade.
+                    </p>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="pillar-card border-t border-white/10 pt-8 flex flex-col items-start relative group mt-0 md:mt-12">
+                    <div class="absolute top-0 left-0 w-0 h-[1px] bg-[#8C7B66] group-hover:w-full transition-all duration-700 ease-[cubic-bezier(.22,1,.36,1)]"></div>
+                    <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none -mx-6 px-6 -mt-8 pt-8 rounded-b-[4px]"></div>
+                    <span class="font-google-sans-flex text-5xl font-light text-[#8C7B66]/20 mb-8 leading-none transition-colors duration-500 group-hover:text-[#8C7B66]/40">02</span>
+                    <h3 class="font-google-sans-flex text-2xl font-medium mb-4 text-white">Inteligência de Dados</h3>
+                    <p class="font-sans text-[#ECE9E4]/70 text-[0.9375rem] font-light leading-[1.75]">
+                        Empregamos análises precisas para garantir a valorização do seu patrimônio. Precificação estratégica e leitura macroeconômica focada em ativos reais.
+                    </p>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="pillar-card border-t border-white/10 pt-8 flex flex-col items-start relative group mt-0 md:mt-24">
+                    <div class="absolute top-0 left-0 w-0 h-[1px] bg-[#8C7B66] group-hover:w-full transition-all duration-700 ease-[cubic-bezier(.22,1,.36,1)]"></div>
+                    <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none -mx-6 px-6 -mt-8 pt-8 rounded-b-[4px]"></div>
+                    <span class="font-google-sans-flex text-5xl font-light text-[#8C7B66]/20 mb-8 leading-none transition-colors duration-500 group-hover:text-[#8C7B66]/40">03</span>
+                    <h3 class="font-google-sans-flex text-2xl font-medium mb-4 text-white">Assessoria Bespoke</h3>
+                    <p class="font-sans text-[#ECE9E4]/70 text-[0.9375rem] font-light leading-[1.75]">
+                        Do acompanhamento jurídico à transição das chaves, oferecemos suporte integral e confidencial. Um consultor dedicado à sua família em cada etapa.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================== FINAL CTA ============================== -->
+    <section class="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden" id="finalCtaSection">
+        <!-- Background Image -->
+        <div class="absolute inset-[-5%] w-[110%] h-[110%] z-0 [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" id="finalCtaBg">
+            <img src="./e189ce3c245771db_5456b531-01fe-4da5-8be1-a0deca.webp" alt="Altis Luxury House" class="w-full h-full object-cover scale-[1.05] will-change-transform [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" />
+            <div class="absolute inset-0 bg-black/60 z-10 pointer-events-none"></div>
+        </div>
+        
+        <!-- Vignette & Glow -->
+        <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#211E1B]/80 via-transparent to-[#211E1B]"></div>
+        <div class="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_0%,#211E1B_100%)] opacity-80 pointer-events-none"></div>
+
+        <!-- Content -->
+        <div class="relative z-10 max-w-[80rem] mx-auto px-6 lg:px-12 w-full flex flex-col items-center text-center">
+            <span class="block text-[var(--bronze)] font-mono text-[0.6875rem] tracking-[0.28em] uppercase mb-8 reveal-cta-fade">CONSULTORIA IMOBILIÁRIA EXCLUSIVA</span>
+            <h2 class="font-google-sans-flex text-4xl md:text-5xl lg:text-[5rem] font-medium leading-[1.05] tracking-[-0.04em] text-white max-w-[1000px] mb-8 split-text-cta">
+                Algumas propriedades não são anunciadas. São apresentadas.
+            </h2>
+            <p class="font-sans text-[#ECE9E4]/95 text-[1rem] lg:text-[1.125rem] font-normal leading-[1.75] max-w-3xl mb-12 reveal-cta-fade-delay" style="text-shadow: 0 2px 12px rgba(0,0,0,0.6);">
+                Nosso atendimento é personalizado para conectar você a propriedades extraordinárias, selecionadas com discrição, excelência e uma curadoria pensada para o seu estilo de vida.
+            </p>
+            
+            <div class="reveal-cta-fade-delay">
+                <button class="ds-btn ds-btn--hero-primary ds-magnetic whitespace-nowrap flex items-center justify-center gap-2" style="padding: 1.25rem 2.5rem; font-size: 0.8125rem; max-width: 100%;">
+                    Agendar uma consultoria privada <iconify-icon icon="solar:arrow-right-up-linear" class="text-xl flex-shrink-0"></iconify-icon>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================== FOOTER ============================== -->
+    <footer class="relative w-full bg-[#211E1B] text-[var(--mist)] pt-24 pb-12 border-t border-white/5" id="footerSection">
+        <div class="max-w-[80rem] mx-auto px-6 lg:px-12 w-full">
+            
+            <div class="flex flex-col lg:flex-row justify-between gap-16 lg:gap-24 mb-24">
+                <!-- Brand Col -->
+                <div class="lg:w-1/3 flex flex-col items-start">
+                    <a href="#" class="flex-shrink-0 flex items-center gap-2.5 group mb-8">
+                        <iconify-icon class="text-[#8C7B66]" height="28" icon="solar:hexagon-linear" style="stroke-width:1.5px"></iconify-icon>
+                        <span class="font-google-sans-flex text-[1.5rem] tracking-tight text-white">ALTIS<sup class="text-[10px] align-top">®</sup></span>
+                    </a>
+                    <p class="font-sans text-[var(--slate)] text-[0.9375rem] font-light leading-[1.8] max-w-sm mb-10">
+                        A curadoria definitiva do alto padrão imobiliário. Elevamos o mercado a uma forma de arte.
+                    </p>
+                    <!-- Socials -->
+                    <div class="flex items-center gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-[#8C7B66] hover:border-[#8C7B66] hover:text-white text-white/60 transition-all duration-300 ds-magnetic">
+                            <iconify-icon icon="mdi:instagram" class="text-lg"></iconify-icon>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-[#8C7B66] hover:border-[#8C7B66] hover:text-white text-white/60 transition-all duration-300 ds-magnetic">
+                            <iconify-icon icon="mdi:linkedin" class="text-lg"></iconify-icon>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-[#8C7B66] hover:border-[#8C7B66] hover:text-white text-white/60 transition-all duration-300 ds-magnetic">
+                            <iconify-icon icon="mdi:youtube" class="text-lg"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Nav Cols -->
+                <div class="lg:w-2/3 flex flex-wrap lg:justify-end gap-12 lg:gap-24">
+                    
+                    <div class="flex flex-col">
+                        <h4 class="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-white mb-6">Navegação</h4>
+                        <ul class="flex flex-col gap-4">
+                            <li><a href="#" class="text-[0.875rem] text-[var(--slate)] hover:text-[var(--bronze)] transition-colors">Propriedades</a></li>
+                            <li><a href="#" class="text-[0.875rem] text-[var(--slate)] hover:text-[var(--bronze)] transition-colors">Lançamentos</a></li>
+                            <li><a href="#" class="text-[0.875rem] text-[var(--slate)] hover:text-[var(--bronze)] transition-colors">Off-Market</a></li>
+                            <li><a href="#" class="text-[0.875rem] text-[var(--slate)] hover:text-[var(--bronze)] transition-colors">A Marca</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <h4 class="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-white mb-6">Contato</h4>
+                        <ul class="flex flex-col gap-4">
+                            <li><a href="#" class="text-[0.875rem] text-[var(--slate)] hover:text-[var(--bronze)] transition-colors">+55 62 9999-9999</a></li>
+                            <li><a href="#" class="text-[0.875rem] text-[var(--slate)] hover:text-[var(--bronze)] transition-colors">concierge@altis.com</a></li>
+                            <li class="mt-2 text-[0.875rem] text-[var(--slate)] max-w-[200px] leading-[1.6]">
+                                Av. Dep. Jamel Cecílio, 3300<br/>Goiânia, GO
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Bottom Legal -->
+            <div class="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="font-mono text-[0.6875rem] text-[var(--slate)] tracking-[0.05em]">
+                    &copy; 2026 Altis Real Estate. Todos os direitos reservados.
+                </p>
+                <div class="flex items-center gap-6 font-mono text-[0.6875rem] text-[var(--slate)] tracking-[0.05em]">
+                    <a href="#" class="hover:text-[var(--mist)] transition-colors">Política de Privacidade</a>
+                    <a href="#" class="hover:text-[var(--mist)] transition-colors">Termos de Uso</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ============================== SCRIPTS ============================== -->
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+
+    <script>
+        // 1. Lenis Smooth Scroll
+        const lenis = new Lenis({
+            lerp: 0.05,
+            smoothWheel: true,
+            wheelMultiplier: 1.2
+        });
+        
+        // Sincronização Rigorosa do GSAP com o Lenis
+        let scrollTimeout;
+        lenis.on('scroll', () => {
+            ScrollTrigger.update();
+            document.documentElement.classList.add('is-scrolling');
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                document.documentElement.classList.remove('is-scrolling');
+            }, 100);
+        });
+        
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        
+        gsap.ticker.lagSmoothing(0);
+
+        // 2. Cursor Aura (Microinteraction)
+        const cursor = document.getElementById('cursorAura');
+        if (cursor) {
+            let cursorX = window.innerWidth / 2;
+            let cursorY = window.innerHeight / 2;
+
+            document.addEventListener('mousemove', (e) => {
+                cursorX = e.clientX;
+                cursorY = e.clientY;
+                cursor.style.opacity = '1';
+            });
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
+            });
+
+            gsap.ticker.add(() => {
+                gsap.set(cursor, {
+                    x: cursorX,
+                    y: cursorY
+                });
+            });
+        }
+
+        // 3. Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.remove('h-[112px]', 'bg-white');
+                navbar.classList.add('h-[80px]', 'bg-white/90', 'backdrop-blur-md', 'shadow-[0_4px_30px_rgba(0,0,0,0.05)]');
+            } else {
+                navbar.classList.add('h-[112px]', 'bg-white');
+                navbar.classList.remove('h-[80px]', 'bg-white/90', 'backdrop-blur-md', 'shadow-[0_4px_30px_rgba(0,0,0,0.05)]');
+            }
+        });
+
+        // 4. Tabs Animation (Search Card)
+        const tabs = document.querySelectorAll('.search-tab');
+        const indicator = document.querySelector('.tab-indicator');
+
+        if(tabs.length > 0 && indicator) {
+            // Set initial width
+            setTimeout(() => {
+                indicator.style.width = `${tabs[0].offsetWidth}px`;
+            }, 100);
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    // Reset all
+                    tabs.forEach(t => {
+                        t.classList.remove('active', 'text-white');
+                        t.classList.add('text-white/50');
+                    });
+                    
+                    // Set active
+                    const target = e.currentTarget;
+                    target.classList.add('active', 'text-white');
+                    target.classList.remove('text-white/50');
+                    
+                    // Move indicator
+                    indicator.style.left = `${target.offsetLeft}px`;
+                    indicator.style.width = `${target.offsetWidth}px`;
+                });
+            });
+        }
+
+        // 5. GSAP Hero Animations (High Performance, 60fps targeted)
+        document.addEventListener("DOMContentLoaded", () => {
+            const tl = gsap.timeline();
+
+            // Prepare text splitting
+            const title = new SplitType('.hero-title', { types: 'words, chars' });
+            
+            // Image Cinematic Reveal
+            tl.fromTo('#heroImage', {
+                scale: 1.15,
+                filter: 'blur(16px) brightness(1.25)'
+            }, {
+                scale: 1,
+                filter: 'blur(0px) brightness(1)',
+                duration: 2.2,
+                ease: 'power3.inOut',
+                clearProps: 'filter'
+            }, 0)
+
+            // Eyebrow Reveal
+            .to('#heroEyebrow', {
+                y: '0%',
+                duration: 1.2,
+                ease: 'power3.out'
+            }, 1.0)
+
+            // Title Reveal (Staggered Characters)
+            .from(title.chars, {
+                yPercent: 120,
+                opacity: 0,
+                stagger: 0.015,
+                duration: 1.2,
+                ease: 'power4.out'
+            }, 1.2)
+
+            // Subtitle & Buttons Fade
+            .to('.hero-fade', {
+                y: 0,
+                opacity: 1,
+                stagger: 0.15,
+                duration: 1.2,
+                ease: 'power3.out',
+                clearProps: 'transform'
+            }, 1.6);
+
+            // 6. Parallax effect on scroll
+            gsap.to('#heroBgWrapper', {
+                yPercent: 20,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.hero-section',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            });
+
+            // 7. Magnetic Buttons Effect
+            const magnetics = document.querySelectorAll('.ds-magnetic');
+            magnetics.forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    
+                    gsap.to(btn, {
+                        x: x * 0.25,
+                        y: y * 0.25,
+                        duration: 0.4,
+                        ease: 'power2.out'
+                    });
+                });
+                
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, {
+                        x: 0,
+                        y: 0,
+                        duration: 0.7,
+                        ease: 'elastic.out(1, 0.3)'
+                    });
+                });
+            });
+
+            // 8. Vanilla Tilt for Search Card
+            const tiltCard = document.querySelector(".ds-tilt");
+            if (tiltCard && window.innerWidth > 1024) {
+                VanillaTilt.init(tiltCard, {
+                    max: 2,
+                    speed: 600,
+                    glare: false,
+                    gyroscope: false
+                });
+            }
+
+                // 9. Featured Properties Animations
+                const featuredSection = document.getElementById('featuredSection');
+                if (featuredSection) {
+                    const sectionTitle = new SplitType('.split-text-hero', { types: 'words, chars' });
+                    
+                    gsap.from(sectionTitle.chars, {
+                        scrollTrigger: {
+                            trigger: '.split-text-hero',
+                            start: 'top 85%',
+                        },
+                        yPercent: 120,
+                        opacity: 0,
+                        stagger: 0.015,
+                        duration: 1.2,
+                        ease: 'power4.out'
+                    });
+
+                    gsap.from('.split-text-fade', {
+                        scrollTrigger: {
+                            trigger: '.split-text-hero',
+                            start: 'top 85%',
+                        },
+                        opacity: 0,
+                        y: 20,
+                        duration: 1.2,
+                        ease: 'power3.out'
+                    });
+
+                    const cards = document.querySelectorAll('.featured-card');
+                    cards.forEach(card => {
+                        const img = card.querySelector('.featured-img');
+                        
+                        gsap.from(card, {
+                            scrollTrigger: {
+                                trigger: card,
+                                start: 'top 85%',
+                            },
+                            y: 80,
+                            opacity: 0,
+                            duration: 1.6,
+                            ease: 'power3.out'
+                        });
+
+                        gsap.to(img, {
+                            scrollTrigger: {
+                                trigger: card,
+                                start: 'top bottom',
+                                end: 'bottom top',
+                                scrub: true
+                            },
+                            yPercent: 12,
+                            ease: 'none'
+                        });
+                    });
+                }
+
+                // 10. The Curatorship Animations
+                const curatorshipSection = document.getElementById('curatorshipSection');
+                if (curatorshipSection) {
+                    const bgLettering = document.getElementById('bgLettering');
+                    if (bgLettering) {
+                        gsap.to(bgLettering, {
+                            scrollTrigger: {
+                                trigger: curatorshipSection,
+                                start: 'top bottom',
+                                end: 'bottom top',
+                                scrub: 1
+                            },
+                            xPercent: -20,
+                            ease: 'none'
+                        });
+                    }
+
+                    const editorialTitle = new SplitType('.split-text-editorial', { types: 'words, chars' });
+                    
+                    gsap.from(editorialTitle.words, {
+                        scrollTrigger: {
+                            trigger: curatorshipSection,
+                            start: 'top 75%',
+                        },
+                        yPercent: 120,
+                        opacity: 0,
+                        rotationX: -40,
+                        stagger: 0.05,
+                        duration: 1.4,
+                        ease: 'power4.out',
+                        transformOrigin: "0% 50% -50"
+                    });
+
+                    gsap.from('.reveal-fade', {
+                        scrollTrigger: {
+                            trigger: curatorshipSection,
+                            start: 'top 80%',
+                        },
+                        opacity: 0,
+                        y: 20,
+                        duration: 1.2,
+                        ease: 'power3.out'
+                    });
+
+                    gsap.from('.reveal-fade-delay', {
+                        scrollTrigger: {
+                            trigger: curatorshipSection,
+                            start: 'top 70%',
+                        },
+                        opacity: 0,
+                        y: 30,
+                        duration: 1.4,
+                        ease: 'power3.out'
+                    });
+
+                    const editorialImgWrapper = document.querySelector('.editorial-image-wrapper');
+                    const editorialImg = document.querySelector('.editorial-img');
+                    
+                    if (editorialImgWrapper && editorialImg) {
+                        const tlImage = gsap.timeline({
+                            scrollTrigger: {
+                                trigger: curatorshipSection,
+                                start: 'top 65%',
+                            }
+                        });
+
+                        tlImage.fromTo(editorialImgWrapper, {
+                            clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)'
+                        }, {
+                            clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                            duration: 1.6,
+                            ease: 'power4.inOut'
+                        });
+
+                        tlImage.fromTo(editorialImg, {
+                            scale: 1.3
+                        }, {
+                            scale: 1,
+                            duration: 1.6,
+                            ease: 'power4.inOut'
+                        }, 0);
+
+                        gsap.to(editorialImg, {
+                            scrollTrigger: {
+                                trigger: editorialImgWrapper,
+                                start: 'top bottom',
+                                end: 'bottom top',
+                                scrub: true
+                            },
+                            yPercent: 15,
+                            ease: 'none'
+                        });
+                    }
+
+                    gsap.from('.reveal-card', {
+                        scrollTrigger: {
+                            trigger: '.reveal-card',
+                            start: 'top 95%',
+                        },
+                        y: 50,
+                        opacity: 0,
+                        rotationZ: -2,
+                        duration: 1.2,
+                        ease: 'power3.out'
+                    });
+                }
+
+                // 11. Approach Section Animations
+                const approachSection = document.getElementById('approachSection');
+                if (approachSection) {
+                    const titleApp = new SplitType('.split-text-hero-approach', { types: 'words, chars' });
+                    
+                    gsap.from(titleApp.chars, {
+                        scrollTrigger: {
+                            trigger: '.split-text-hero-approach',
+                            start: 'top 85%',
+                        },
+                        yPercent: 120,
+                        opacity: 0,
+                        stagger: 0.015,
+                        duration: 1.2,
+                        ease: 'power4.out'
+                    });
+
+                    gsap.from('.split-text-fade-approach', {
+                        scrollTrigger: {
+                            trigger: '.split-text-hero-approach',
+                            start: 'top 85%',
+                        },
+                        opacity: 0,
+                        y: 20,
+                        duration: 1.2,
+                        ease: 'power3.out'
+                    });
+
+                    gsap.from('.pillar-card', {
+                        scrollTrigger: {
+                            trigger: '.pillar-card',
+                            start: 'top 80%',
+                        },
+                        y: 40,
+                        opacity: 0,
+                        stagger: 0.2,
+                        duration: 1.2,
+                        ease: 'power3.out'
+                    });
+                }
+
+                // 13. Final CTA Animations
+                const finalCtaSection = document.getElementById('finalCtaSection');
+                if (finalCtaSection) {
+                    const titleCta = new SplitType('.split-text-cta', { types: 'words, chars' });
+                    
+                    gsap.from(titleCta.words, {
+                        scrollTrigger: {
+                            trigger: finalCtaSection,
+                            start: 'top 75%',
+                        },
+                        yPercent: 120,
+                        opacity: 0,
+                        rotationX: -40,
+                        stagger: 0.05,
+                        duration: 1.4,
+                        ease: 'power4.out',
+                        transformOrigin: "0% 50% -50"
+                    });
+
+                    gsap.from('.reveal-cta-fade', {
+                        scrollTrigger: {
+                            trigger: finalCtaSection,
+                            start: 'top 80%',
+                        },
+                        opacity: 0,
+                        y: 20,
+                        duration: 1.2,
+                        ease: 'power3.out'
+                    });
+
+                    gsap.from('.reveal-cta-fade-delay', {
+                        scrollTrigger: {
+                            trigger: finalCtaSection,
+                            start: 'top 70%',
+                        },
+                        opacity: 0,
+                        y: 30,
+                        duration: 1.4,
+                        ease: 'power3.out'
+                    });
+
+                    gsap.fromTo('#finalCtaBg', {
+                        yPercent: -15,
+                        scale: 1.15
+                    }, {
+                        scrollTrigger: {
+                            trigger: finalCtaSection,
+                            start: 'top bottom',
+                            end: 'bottom top',
+                            scrub: true
+                        },
+                        yPercent: 15,
+                        scale: 1,
+                        ease: 'none'
+                    });
+                }
+
+                // 14. Footer Animation
+                const footerSection = document.getElementById('footerSection');
+                if (footerSection) {
+                    gsap.from(footerSection.children, {
+                        scrollTrigger: {
+                            trigger: footerSection,
+                            start: 'top 95%',
+                        },
+                        y: 30,
+                        opacity: 0,
+                        stagger: 0.1,
+                        duration: 1,
+                        ease: 'power3.out'
+                    });
+                }
+        });
+    </script>
+</body>
+</html>
+
