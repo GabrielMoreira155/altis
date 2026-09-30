@@ -10,15 +10,15 @@
     <meta name="theme-color" content="#FFFFFF">
 
     <!-- Preloads -->
-    <link rel="preload" href="./image copy 2.png" as="image" fetchpriority="high">
+    <link rel="preload" href="./hero.webp" as="image" type="image/webp" fetchpriority="high">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Inter+Tight:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     
-    <!-- TailwindCSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- TailwindCSS (CSS estático gerado — o script do CDN travava o carregamento) -->
+    <link rel="stylesheet" href="./tailwind.css">
     
 
 
@@ -42,6 +42,8 @@
             --bronze: #8C7B66;
             --bronze-lt: #B9A88F;
             --bronze-dk: #6E6050;
+            --bronze-32: rgba(140,123,102,0.32);
+            --bronze-56: rgba(140,123,102,0.56);
             
             --font-display: "Google Sans Flex", "Inter Tight", "Inter", sans-serif;
             --font-body: "Inter", sans-serif;
@@ -252,7 +254,7 @@
         
         <!-- Background Image com Cinematic Treatment -->
         <div class="absolute inset-[-5%] z-0 will-change-transform [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" id="heroBgWrapper">
-            <img src="./image copy 2.png" alt="Luxury Desert Retreat" class="w-full h-full object-cover" id="heroImage" fetchpriority="high" decoding="sync" width="1920" height="1080" />
+            <img src="./hero.webp" alt="Luxury Desert Retreat" class="w-full h-full object-cover" id="heroImage" fetchpriority="high" width="1024" height="683" />
             <div class="hero-overlay absolute inset-0"></div>
         </div>
         
@@ -424,7 +426,7 @@
                     
                     <!-- Image Content (Right) -->
                     <div class="w-full lg:w-[60%] overflow-hidden relative order-1 lg:order-2 h-[50vh] lg:h-[80vh] rounded-[4px]">
-                        <img src="./image copy 3.png" alt="Mansão Aldeia" class="w-full h-full object-cover featured-img scale-[1.15] transition-transform duration-[1.5s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-100 will-change-transform [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" />
+                        <img src="./mansao-aldeia.webp" loading="lazy" decoding="async" alt="Mansão Aldeia" class="w-full h-full object-cover featured-img scale-[1.15] transition-transform duration-[1.5s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-100 will-change-transform [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" />
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700 pointer-events-none"></div>
                     </div>
                 </article>
@@ -433,7 +435,7 @@
                 <article class="featured-card group flex flex-col lg:flex-row items-center gap-12 lg:gap-24 w-full">
                     <!-- Image Content (Left) -->
                     <div class="w-full lg:w-[60%] overflow-hidden relative h-[50vh] lg:h-[80vh] rounded-[4px]">
-                        <img src="./image copy 4.png" alt="Mansão Itália" class="w-full h-full object-cover featured-img scale-[1.15] transition-transform duration-[1.5s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-100 will-change-transform [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" />
+                        <img src="./mansao-italia.webp" loading="lazy" decoding="async" alt="Mansão Itália" class="w-full h-full object-cover featured-img scale-[1.15] transition-transform duration-[1.5s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-100 will-change-transform [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" />
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700 pointer-events-none"></div>
                     </div>
 
@@ -492,7 +494,7 @@
                     
                     <!-- Image Content (Right) -->
                     <div class="w-full lg:w-[60%] overflow-hidden relative order-1 lg:order-2 h-[50vh] lg:h-[80vh] rounded-[4px]">
-                        <img src="./image copy 5_highres.png" alt="Residência Alpha" class="w-full h-full object-cover featured-img scale-[1.15] transition-transform duration-[1.5s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-100 will-change-transform brightness-125" />
+                        <img src="./residencia-alpha.webp" loading="lazy" decoding="async" alt="Residência Alpha" class="w-full h-full object-cover featured-img scale-[1.15] transition-transform duration-[1.5s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-100 will-change-transform brightness-125" />
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700 pointer-events-none"></div>
                     </div>
                 </article>
@@ -552,7 +554,7 @@
                     <div class="relative w-full aspect-[3/4] lg:aspect-[4/5] overflow-hidden rounded-[4px] editorial-image-wrapper">
                         <!-- CSS Parallax wrapper inside -->
                         <div class="absolute inset-[-10%] w-[120%] h-[120%]">
-                            <img src="./terceira-dobra.jpg" alt="Fachada Residencial" class="w-full h-full object-cover editorial-img opacity-90 will-change-transform [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" />
+                            <img src="./terceira-dobra.webp" loading="lazy" decoding="async" alt="Fachada Residencial" class="w-full h-full object-cover editorial-img opacity-90 will-change-transform [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" />
                         </div>
                         <div class="absolute inset-0 bg-gradient-to-t from-[#211E1B] via-transparent to-transparent opacity-80 pointer-events-none"></div>
                         <div class="absolute inset-0 border border-white/10 rounded-[4px] pointer-events-none"></div>
@@ -640,7 +642,7 @@
     <section class="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden" id="finalCtaSection">
         <!-- Background Image -->
         <div class="absolute inset-[-5%] w-[110%] h-[110%] z-0 [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" id="finalCtaBg">
-            <img src="./e189ce3c245771db_5456b531-01fe-4da5-8be1-a0deca.webp" alt="Altis Luxury House" class="w-full h-full object-cover scale-[1.05] will-change-transform [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" />
+            <img src="./e189ce3c245771db_5456b531-01fe-4da5-8be1-a0deca.webp" loading="lazy" decoding="async" alt="Altis Luxury House" class="w-full h-full object-cover scale-[1.05] will-change-transform [transform:translateZ(0)] backface-hidden [transform-style:preserve-3d]" />
             <div class="absolute inset-0 bg-black/60 z-10 pointer-events-none"></div>
         </div>
         
@@ -740,7 +742,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    <script src="https://unpkg.com/split-type"></script>
+    <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
 
     <script>
